@@ -36,6 +36,7 @@ def split_data(image_classifications):
 
     return X_train, y_train, X_val, y_val, X_test, y_test
 
+#TODO DEAL WITH THIS
 def train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, batch_size=32):
 
     model = models.Sequential([

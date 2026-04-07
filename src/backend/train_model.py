@@ -8,8 +8,8 @@ main_bucket = os.environ.get("MAIN_BUCKET")
 
 MODEL_NAME = "banana_model.keras"
 
-def save_model():
-
+def save_model() -> None:
+    """Trains a model on stored images and save it to disk."""
     images = extract_imgs_from_db(main_bucket)
 
     X_train, y_train, X_val, y_val, X_test, y_test = split_data(images)

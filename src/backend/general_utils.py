@@ -1,11 +1,23 @@
 from PIL import Image
 import numpy as np
 import io
+from typing import Literal
 
 from src.backend.weather_api import get_weekly_temperature_df
 
-def preprocess_image(file_bytes):
+def preprocess_image(file_bytes: bytes) -> np.ndarray:
+    """
+    Loads raw image bytes, converts the image to RGB,
+    resizes it to 128*128 pixels, and normalises pixel values to the
+    range [0, 1].
 
+    Args:
+        file_bytes: Raw image data in bytes.
+
+    Returns:
+        A NumPy array of shape (128, 128, 3)
+        scaled to the range [0, 1].
+    """
     img = Image.open(io.BytesIO(file_bytes))
 
     # normalising images for nn
@@ -14,7 +26,21 @@ def preprocess_image(file_bytes):
     # scaling pixels to avoid exploding/vanishing gradients 
     return np.array(img) / 255.0 # each pixel becomes a list of 3 numbers [R, G, B]
 
-def compute_cumulative_ripening(initial_classification):
+
+def compute_cumulative_ripening(initial_classification: Literal["Unripe", "Ripe", "Overripe"]) -> str:
+    """
+    Estimate ripening or expiry time based on temperature-dependent function.
+
+    Args:
+        initial_classification: The starting ripeness category. Must be one of
+            "Unripe", "Ripe", or "Overripe".
+
+    Returns:
+        A human-readable string describing either:
+        - days until ripeness (if starting unripe),
+        - days until expiry (if starting ripe),
+        - or immediate expiration status (if already overripe).
+    """
 
     k_ref = 0.25
     T_ref = 20

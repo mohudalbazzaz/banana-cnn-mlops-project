@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import os
+from keras.callbacks import History
 
 from src.backend.model_utils import train_and_validate_model, split_data
 
@@ -9,13 +10,20 @@ from src.backend.supabase import extract_imgs_from_db
 
 main_bucket = os.environ.get("MAIN_BUCKET")
 
-def minimise_validation_loss(metrics):
+def minimise_validation_loss(metrics: History) -> None:
+    """
+    Plot training and validation loss across epochs.
 
+    Extracts the training and validation loss values 
+    visualises them over the full training period.
+
+    Args:
+        metrics: A Keras History object containing recorded loss values
+    """
     validation_losses = metrics.history['val_loss']
     training_losses = metrics.history['loss']
 
     num_epochs = len(validation_losses)
-    print('num epochs', num_epochs)
     x = np.arange(1, num_epochs + 1, 1)
 
     plt.figure(figsize=(10, 6))
@@ -32,7 +40,8 @@ def minimise_validation_loss(metrics):
 
     plt.show()
 
-def batch_size_tuning():
+def batch_size_tuning() -> None:
+    """Compare validation loss curves for multiple batch sizes."""
 
     images = extract_imgs_from_db(main_bucket)
 
@@ -58,7 +67,8 @@ def batch_size_tuning():
 
     plt.show()
 
-def learning_rate_tuning():
+def learning_rate_tuning() -> None:
+    """Compare validation loss curves for multiple learning rates."""
     
     images = extract_imgs_from_db(main_bucket)
 

@@ -4,7 +4,15 @@ import pandas as pd
 import requests_cache
 from retry_requests import retry
 
-def get_weekly_temperature_df():
+def get_weekly_temperature_df() -> pd.DataFrame:
+    """
+    Fetch a 16-day maximum temperature forecast for London.
+
+    Returns:
+        A pandas DataFrame containing two columns:
+        - "date": Datetime index for each forecasted day.
+        - "temperature_2m_max": Maximum temperature values in °C.
+    """
 
     # Setup the Open-Meteo API client with cache and retry on error
     cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
