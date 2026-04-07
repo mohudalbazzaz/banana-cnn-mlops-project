@@ -11,6 +11,7 @@ url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
 main_bucket = os.environ.get("MAIN_BUCKET")
 
+#TODO DEAL WITH THIS
 def extract_imgs_from_db(bucket_name):
 
     supabase = create_client(url, key)

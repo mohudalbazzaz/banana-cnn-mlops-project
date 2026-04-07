@@ -14,8 +14,23 @@ async def health_check():
     return JSONResponse(content={"status": "healthy"}, status_code=200)
 
 @app.post("/banana_ripeness_classifier")
-async def banana_ripeness_classifier(file: UploadFile = File(...)):
+async def banana_ripeness_classifier(file: UploadFile = File(...)) -> str:
+    """Classify banana ripeness from an uploaded image and estimate ripening time.
 
+    This endpoint accepts an image upload, preprocesses it for the model,
+    performs inference to determine the ripeness class, and then computes
+    the estimated number of days until ripeness or expiry using a
+    temperature-based ripening model.
+
+    Args:
+        file: An uploaded image file provided by the client.
+
+    Returns:
+        A string describing either:
+        - days until ripeness (if predicted unripe),
+        - days until expiry (if predicted ripe),
+        - or expiration status (if predicted overripe).
+    """
     image = await file.read()
 
     img = preprocess_image(image)

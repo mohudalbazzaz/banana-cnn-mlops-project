@@ -9,8 +9,11 @@ testing_bucket = os.environ.get("TESTING_BUCKET")
 
 model = load_model()
 
-def monitor_model():
-
+def monitor_model() -> None:
+    """
+    Loads labelled test images from a storage bucket, performs inference 
+    using a pre-loaded model, and logs each prediction to MLflow. 
+    """
     image_classifications = extract_imgs_from_db(testing_bucket)
 
     X = []
