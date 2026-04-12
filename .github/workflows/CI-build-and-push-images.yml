@@ -13,6 +13,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: ACR Login
+      run: az acr login --name bananacnnproject
+
     - uses: actions/checkout@v4
     - name: Build the Docker images
       run: |
@@ -20,15 +28,15 @@ jobs:
         TAG=$(git rev-parse --short HEAD)
 
         docker buildx build \
-        --platform linux/amd64 \            
+        --platform linux/amd64 \
         -f src/backend/Dockerfile \
-        -t bananacnnproject.azurecr.io/backend:$TAG \     
-        --push \         
+        -t bananacnnproject.azurecr.io/backend:$TAG \
+        --push \
         .
 
         docker buildx build \
-        --platform linux/amd64 \            
+        --platform linux/amd64 \
         -f src/frontend/Dockerfile \
-        -t bananacnnproject.azurecr.io/frontend:$TAG \     
-        --push \         
-        .    
+        -t bananacnnproject.azurecr.io/frontend:$TAG \
+        --push \
+        .
