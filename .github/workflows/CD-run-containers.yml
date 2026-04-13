@@ -2,7 +2,7 @@ name: CD Pipeline - Deploy to ACI
 
 on:
   workflow_run:
-    workflows: ["CI-build-and-push-images"]
+    workflows: ["CI Pipeline - Build Docker Images"]
     types:
       - completed
 
@@ -24,4 +24,4 @@ jobs:
         run: |
           az container create \
             --resource-group banana-project-rg \
-            --container_spec.yml
+            --file container_spec.yml
