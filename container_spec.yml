@@ -1,6 +1,6 @@
 apiVersion: 2019-12-01
 location: uksouth
-name: banana-app
+name: bananacnnproject
 properties:
   osType: Linux
 
