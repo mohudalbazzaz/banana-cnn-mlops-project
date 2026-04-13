@@ -24,4 +24,4 @@ jobs:
         run: |
           az container create \
             --resource-group banana-project-rg \
-            --container_spec.yml
+            --file container_spec.yml
