@@ -1,6 +1,8 @@
 name: CI Pipeline - Build Docker Images
 
 on:
+  push:
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
