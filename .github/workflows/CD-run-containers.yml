@@ -23,11 +23,11 @@ jobs:
           az containerapp update \
             --name backend \
             --resource-group banana-project-rg \
-            --image bananacnnproject.azurecr.io/backend:${ git rev-parse --short HEAD }
+            --image bananacnnproject.azurecr.io/backend:d8280b7
 
       - name: Deploy frontend to Container Apps
         run: |
           az containerapp update \
             --name frontend \
             --resource-group banana-project-rg \
-            --image bananacnnproject.azurecr.io/frontend:${ git rev-parse --short HEAD }
+            --image bananacnnproject.azurecr.io/frontend:d8280b7
