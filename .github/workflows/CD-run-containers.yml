@@ -20,14 +20,15 @@ jobs:
 
       - name: Deploy backend to Container Apps
         run: |
+          TAG=$(git rev-parse --short HEAD)
           az containerapp update \
             --name backend \
             --resource-group banana-project-rg \
-            --image bananacnnproject.azurecr.io/backend:d8280b7
+            --image bananacnnproject.azurecr.io/backend:$TAG
 
       - name: Deploy frontend to Container Apps
         run: |
           az containerapp update \
             --name frontend \
             --resource-group banana-project-rg \
-            --image bananacnnproject.azurecr.io/frontend:d8280b7
+            --image bananacnnproject.azurecr.io/frontend:$TAG
