@@ -2,19 +2,11 @@ name: CD Pipeline - Deploy to ACI
 
 on:
   push:
-    branches: 
-    - "**"
-  # workflow_run:
-  #   workflows: ["CI Pipeline - Build Docker Images"]
-  #   types:
-  #     - completed
+    branches:
+      - "**"
 
 jobs:
   deploy:
-    # if: |
-    #   github.event_name == 'push' ||
-    #   (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
-
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +18,20 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to ACI using container spec
+      - name: Export ACR credentials
+        run: |
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
+
+      - name: Install envsubst
+        run: sudo apt-get update && sudo apt-get install -y gettext
+
+      - name: Generate resolved container spec
+        run: |
+          envsubst < container_spec.yml > container_spec_resolved.yml
+
+      - name: Deploy to ACI
         run: |
           az container create \
             --resource-group banana-project-rg \
-            --file container_spec.yml
+            --file container_spec_resolved.yml
