@@ -6,9 +6,33 @@ on:
     types:
     - completed
 
-jobs:
-  deploy:
+jobs: 
+  deploy-backend:
+    name: Deploy Backend to Container Apps
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+ 
+      - name: Deploy Backend to Container Apps
+        run: |
+          TAG=$(git rev-parse --short HEAD)
+          az containerapp update \
+            --name backend \
+            --resource-group banana-project-rg \
+            --image bananacnnproject.azurecr.io/backend:$TAG
+
+  deploy-frontend: 
+    name: Deploy Frontend to Container Apps
+    runs-on: ubuntu-latest
+    needs: deploy-backend
 
     steps:
       - name: Checkout repository
@@ -19,15 +43,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Containers to Container Apps
+      - name: Deploy Frontend to Container Apps
         run: |
           TAG=$(git rev-parse --short HEAD)
           az containerapp update \
-            --name backend \
-            --resource-group banana-project-rg \
-            --image bananacnnproject.azurecr.io/backend:$TAG
-
-          az containerapp update \
-            --name frontend \
-            --resource-group banana-project-rg \
-            --image bananacnnproject.azurecr.io/frontend:$TAG
+          --name frontend \
+          --resource-group banana-project-rg \
+          --image bananacnnproject.azurecr.io/frontend:$TAG
