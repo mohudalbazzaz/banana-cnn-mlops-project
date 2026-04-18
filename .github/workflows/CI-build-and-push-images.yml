@@ -21,22 +21,32 @@ jobs:
     - name: ACR Login
       run: az acr login --name bananacnnproject
 
-    - uses: actions/checkout@v4
-    - name: Build the Docker images
+    - name: Set up Docker Buildx
+      # needs to be set up to enable caching
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build backend image
       run: |
-        # git rev-parse -> resolve commit reference
         TAG=$(git rev-parse --short HEAD)
 
         docker buildx build \
-        --platform linux/amd64 \
-        -f src/backend/Dockerfile \
-        -t bananacnnproject.azurecr.io/backend:$TAG \
-        --push \
-        .
+          --platform linux/amd64 \
+          -f src/backend/Dockerfile \
+          -t bananacnnproject.azurecr.io/backend:$TAG \
+          --push \
+          --cache-from=type=registry,ref=bananacnnproject.azurecr.io/backend:buildcache \
+          --cache-to=type=registry,ref=bananacnnproject.azurecr.io/backend:buildcache,mode=max \
+          .
+
+    - name: Build frontend image
+      run: |
+        TAG=$(git rev-parse --short HEAD)
 
         docker buildx build \
-        --platform linux/amd64 \
-        -f src/frontend/Dockerfile \
-        -t bananacnnproject.azurecr.io/frontend:$TAG \
-        --push \
-        .
+          --platform linux/amd64 \
+          -f src/frontend/Dockerfile \
+          -t bananacnnproject.azurecr.io/frontend:$TAG \
+          --push \
+          --cache-from=type=registry,ref=bananacnnproject.azurecr.io/frontend:buildcache \
+          --cache-to=type=registry,ref=bananacnnproject.azurecr.io/frontend:buildcache,mode=max \
+          .
