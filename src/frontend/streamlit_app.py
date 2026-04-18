@@ -1,5 +1,11 @@
 import streamlit as st
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+BACKEND_URL = os.getenv("BACKEND_URL", "http://backend:8000")
 
 
 def run_ui() -> None:
@@ -32,7 +38,7 @@ def run_ui() -> None:
 
             try:
                 response = requests.post(
-                    "http://backend:8000/banana_ripeness_classifier", files=files
+                    f'{BACKEND_URL}/banana_ripeness_classifier', files=files
                 )
 
                 response.raise_for_status()
