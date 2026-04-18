@@ -5,7 +5,7 @@ WORKDIR /app
 RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 
-RUN pip install --no-cache-dir streamlit requests
+RUN pip install --no-cache-dir streamlit requests dotenv
 
 # STAGE 2 - RUNTIME
 FROM python:3.13-slim
