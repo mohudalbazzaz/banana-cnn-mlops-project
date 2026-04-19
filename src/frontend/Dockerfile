@@ -16,4 +16,9 @@ ENV PATH="/venv/bin:$PATH"
 
 COPY src/frontend/streamlit_app.py .
 
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "streamlit_app.py", \
+     "--server.address=0.0.0.0", \
+     "--server.port=8501", \
+     "--server.enableCORS=false", \
+     "--server.enableXsrfProtection=false", \
+     "--server.enableWebsocketCompression=false"]
