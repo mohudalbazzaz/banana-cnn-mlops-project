@@ -16,6 +16,8 @@ ENV PATH="/venv/bin:$PATH"
 
 COPY src/frontend/streamlit_app.py .
 
+# streamlit blocks requests when its run behind a reverse proxy
+# (using azure application gateway) so last flags prevent that
 CMD ["streamlit", "run", "streamlit_app.py", \
      "--server.address=0.0.0.0", \
      "--server.port=8501", \

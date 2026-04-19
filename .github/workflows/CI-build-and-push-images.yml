@@ -35,6 +35,7 @@ jobs:
           --platform linux/amd64 \
           -f src/backend/Dockerfile \
           -t bananacnnproject.azurecr.io/backend:$TAG \
+          --provenance=false \
           --push \
           --cache-from=type=registry,ref=bananacnnproject.azurecr.io/backend:buildcache \
           --cache-to=type=registry,ref=bananacnnproject.azurecr.io/backend:buildcache,mode=max \
@@ -48,6 +49,7 @@ jobs:
           --platform linux/amd64 \
           -f src/frontend/Dockerfile \
           -t bananacnnproject.azurecr.io/frontend:$TAG \
+          --provenance=false \
           --push \
           --cache-from=type=registry,ref=bananacnnproject.azurecr.io/frontend:buildcache \
           --cache-to=type=registry,ref=bananacnnproject.azurecr.io/frontend:buildcache,mode=max \

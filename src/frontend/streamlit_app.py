@@ -38,14 +38,13 @@ def run_ui() -> None:
 
             try:
                 response = requests.post(
-                    f'{BACKEND_URL}/banana_ripeness_classifier', files=files
+                    f"{BACKEND_URL}/banana_ripeness_classifier", files=files
                 )
 
                 response.raise_for_status()
 
                 result = response.json()
                 prediction = result["result"]
-                st.write("BACKEND_URL:", BACKEND_URL)
 
                 st.success(f"{prediction}")
 

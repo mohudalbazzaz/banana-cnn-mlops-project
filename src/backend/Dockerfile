@@ -1,4 +1,4 @@
-# STAGE 1
+# STAGE 1 - BUILDER
 FROM python:3.13-slim as builder
 WORKDIR /app
 
@@ -8,7 +8,7 @@ ENV PATH="/venv/bin:$PATH"
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# STAGE 2
+# STAGE 2 - RUNTIME
 FROM python:3.13-slim
 WORKDIR /app
 
