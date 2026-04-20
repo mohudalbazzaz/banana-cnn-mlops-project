@@ -48,4 +48,4 @@ jobs:
           --name frontend \
           --resource-group banana-project-rg \
           --image bananacnnproject.azurecr.io/frontend:$TAG \
-          --set-env-vars BACKEND_URL=http://backend:8000
+          --set-env-vars BACKEND_URL=http://backend.lemonglacier-175c87d5.uksouth.azurecontainerapps.io
