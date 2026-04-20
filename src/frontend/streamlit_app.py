@@ -44,7 +44,6 @@ def run_ui() -> None:
                 response.raise_for_status()
 
                 result = response.json()
-                st.write(result)
                 prediction = result["result"]
 
                 st.success(f"{prediction}")
