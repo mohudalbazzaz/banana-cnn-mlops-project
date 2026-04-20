@@ -28,13 +28,7 @@ def run_ui() -> None:
 
         if st.button("Predict"):
 
-            files = {
-                "file": (
-                    uploaded_file.name,
-                    uploaded_file.getvalue(),
-                    uploaded_file.type,
-                )
-            }
+            files = {"file": (uploaded_file.name, uploaded_file, uploaded_file.type)}
 
             try:
                 response = requests.post(
