@@ -5,8 +5,7 @@ import os
 
 load_dotenv()
 
-#BACKEND_URL = os.getenv("BACKEND_URL", "http://backend:8000")
-BACKEND_URL = "http://backend:8000"
+BACKEND_URL = os.getenv("BACKEND_URL", "http://backend:8000")
 
 def run_ui() -> None:
     """
