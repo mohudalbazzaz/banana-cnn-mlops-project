@@ -5,7 +5,9 @@ import os
 
 load_dotenv()
 
+# ideally this env variable wouldn't be needed if azure front door is used
 BACKEND_URL = os.getenv("BACKEND_URL", "http://backend:8000")
+
 
 def run_ui() -> None:
     """
@@ -31,53 +33,18 @@ def run_ui() -> None:
 
             try:
                 response = requests.post(
-                    f"{BACKEND_URL}/banana_ripeness_classifier",
-                    files=files,
-                    timeout=30
+                    f"{BACKEND_URL}/banana_ripeness_classifier", files=files
                 )
 
-                # 🚨 This will raise if backend returns 4xx/5xx
                 response.raise_for_status()
 
                 result = response.json()
+                prediction = result["result"]
 
-                # 🚨 Catch missing key issues
-                if "result" not in result:
-                    st.error(f"Unexpected response format: {result}")
-                else:
-                    prediction = result["result"]
-                    st.success(f"{prediction}")
-
-            except requests.exceptions.HTTPError as http_err:
-                st.error(f"HTTP error from backend: {http_err}")
-                st.text(response.text)  # 👈 shows backend error body
-
-            except requests.exceptions.ConnectionError as conn_err:
-                st.error(f"Connection error: {conn_err}")
-
-            except requests.exceptions.Timeout:
-                st.error("Request timed out")
-
-            except requests.exceptions.RequestException as req_err:
-                st.error(f"Request failed: {req_err}")
+                st.success(f"{prediction}")
 
             except Exception as e:
-                st.error(f"Unexpected error: {e}")
-
-            # try:
-            #     response = requests.post(
-            #         f"{BACKEND_URL}/banana_ripeness_classifier", files=files
-            #     )
-
-            #     response.raise_for_status()
-
-            #     result = response.json()
-            #     prediction = result["result"]
-
-            #     st.success(f"{prediction}")
-
-            # except Exception as e:
-            #     st.error(e)
+                st.error(e)
 
 
 if __name__ == "__main__":
