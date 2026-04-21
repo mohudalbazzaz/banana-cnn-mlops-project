@@ -5,8 +5,6 @@ import numpy as np
 from src.backend.general_utils import preprocess_image, compute_cumulative_ripening
 from src.backend.train_model import load_model
 
-model = load_model()
-
 app = FastAPI()
 
 
@@ -34,6 +32,8 @@ async def banana_ripeness_classifier(file: UploadFile = File(...)):
         - or expiration status (if predicted overripe).
     """
     try:
+        model = load_model()
+
         image = await file.read()
 
         img = preprocess_image(image)

@@ -10,7 +10,11 @@ The following formula estimates the per-day ripening of the banana:
 
 ![alt text](images/image.png)
 
-where *T_day* is the temperature on a given day, the reference temperature, *T_ref*, is given as 20°C which is the 'observed' temperature a banana has previously been stored at. At this temperature, it takes 4 days for the cumulative ripening score to exceed one, hence *k_ref* is 0.25 (1 / 4 days). *Q_10* is a measure of how strongly temperature affects ripening i.e in my model that value is assumed to be 2, hence the ripening process doubles for every additional 10°C. 
+where *T_day* is the temperature on a given day, the reference temperature, *T_ref*, is given as 20°C which is the 'observed' temperature a banana has previously been stored at. At this temperature, it takes 4 days for the cumulative ripening score to exceed one, hence *k_ref* is 0.25 (1 / 4 days). *Q_10* is a measure of how strongly temperature affects ripening i.e in my model that value is assumed to be 2, hence the ripening process doubles for every additional 10°C.
+
+Output:
+
+![alt text](images/output.png)
 
 ## Installation
 
