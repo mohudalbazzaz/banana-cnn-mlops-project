@@ -25,22 +25,28 @@ def monitor_model() -> None:
         X.extend(images)
         y.extend(len(images) * [classification])
 
-    for img, true_label in random.sample(list(zip(X, y)), 5):
+    mlflow.set_experiment("Banana Monitoring")
 
-        img = np.expand_dims(img, axis=0)
+    with mlflow.start_run():
 
-        prediction_probs = model.predict(img)
+        correct_predictions = 0
 
-        class_names = ["overripe", "ripe", "unripe"]
+        for img, true_label in random.sample(list(zip(X, y)), 5):
 
-        predicted_class = class_names[np.argmax(prediction_probs)]
+            img = np.expand_dims(img, axis=0)
 
-        mlflow.set_experiment("Banana monitoring")
+            prediction_probs = model.predict(img)
 
-        with mlflow.start_run(nested=True):
-            mlflow.log_param("true_label", true_label)
-            mlflow.log_param("predicted_class", predicted_class)
-            mlflow.log_metric("correct", int(predicted_class == true_label))
+            class_names = ["overripe", "ripe", "unripe"]
+            predicted_class = class_names[np.argmax(prediction_probs)]
+            predicted_class = f"production-{predicted_class}"
+
+            correct_predictions += int(predicted_class == true_label)
+
+        accuracy = correct_predictions / 5
+
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("num_samples", 5)
 
 
 if __name__ == "__main__":
