@@ -5,7 +5,7 @@ streamlit:
 	python3 -m streamlit run src/frontend/streamlit_app.py 
 
 mlflow:
-	mlflow ui --port 5000 --host 127.0.0.1
+	mlflow ui --port 5001 --host 0.0.0.0
 
 compose:
 	docker compose up --build
