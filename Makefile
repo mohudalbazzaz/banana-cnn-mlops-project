@@ -17,4 +17,4 @@ lint:
 	python3 -m black . 
 
 monitor:
-	python -m src.backend.model_monitoring
+	python3 -m src.backend.model_monitoring

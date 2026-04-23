@@ -4,3 +4,4 @@ mlflow.db
 __pycache__/
 .pytest_cache/
 .cache.sqlite
+cron.log
