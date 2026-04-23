@@ -15,3 +15,6 @@ pytest:
 
 lint:
 	python3 -m black . 
+
+monitor:
+	python -m src.backend.model_monitoring
