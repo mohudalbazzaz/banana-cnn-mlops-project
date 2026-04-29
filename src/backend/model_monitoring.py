@@ -31,7 +31,7 @@ def monitor_model() -> None:
 
         correct_predictions = 0
 
-        for img, true_label in random.sample(list(zip(X, y)), 5):
+        for img, true_label in random.sample(list(zip(X, y)), 50):
 
             img = np.expand_dims(img, axis=0)
 
@@ -43,10 +43,10 @@ def monitor_model() -> None:
 
             correct_predictions += int(predicted_class == true_label)
 
-        accuracy = correct_predictions / 5
+        accuracy = correct_predictions / 50
 
         mlflow.log_metric("accuracy", accuracy)
-        mlflow.log_metric("num_samples", 5)
+        mlflow.log_metric("num_samples", 50)
 
 
 if __name__ == "__main__":
