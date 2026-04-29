@@ -16,5 +16,7 @@ pytest:
 lint:
 	python3 -m black . 
 
+# python3 -m doesn't use the python in the venv so packages
+# aren't used for the cron job
 monitor:
-	python3 -m src.backend.model_monitoring
+	./venv/bin/python3.11 -m src.backend.model_monitoring
