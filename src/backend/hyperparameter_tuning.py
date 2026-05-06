@@ -7,7 +7,7 @@ from src.backend.model_utils import train_and_validate_model, split_data
 
 from src.backend.blob_storage import extract_imgs_from_db
 
-BANANA_MODEL_IMAGES = "banana-model-images"
+BANANA_MODEL_IMAGES = "banana-production-images"
 
 
 def minimise_validation_loss(metrics: History) -> None:

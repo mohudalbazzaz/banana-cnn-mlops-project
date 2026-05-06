@@ -19,7 +19,7 @@ def extract_imgs_from_db(container_name: str) -> Dict[str, List[np.ndarray]]:
             A dictionary mapping class labels (folder names) to lists of
             preprocessed image tensors.
     """
-    account_name = "bananaimages"
+    account_name = "bananastorage"
     credential = DefaultAzureCredential()
 
     blob_service_client = BlobServiceClient(
